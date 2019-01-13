@@ -22,6 +22,6 @@ struct Loader {
                 print(error.localizedDescription)
                 completion(nil)
             }
-            }.resume()
+        }.resume()
     }
 }
