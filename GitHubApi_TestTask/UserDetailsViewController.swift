@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class UserDetailsViewController: UIViewController {
     
@@ -21,32 +22,63 @@ class UserDetailsViewController: UIViewController {
     public var user: User?
     private var userDetails: UserDetails?
     private var organizationURL: URL?
+    private var fetchedOrganizations = [Organization]()
+    
+    private var aspectConstraint : NSLayoutConstraint? {
+        didSet {
+            if let old = oldValue {
+                avatarImageView.removeConstraint(old)
+            }
+            if let new = aspectConstraint {
+                avatarImageView.addConstraint(new)
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchUserDetails()
+        fetchAvatar(user?.avatar)
     }
     
     private func fetchUserDetails() {
         guard let user = user else { return }
         guard let url = URL(string: "https://api.github.com/users/\(user.name)") else { return }
         Loader.fetchEntity(url: url, entity: UserDetails.self) { [weak self] result in
-            if let result = result {
+            guard let result = result else { return }
                 self?.userDetails = result
-            }
+                self?.fetchOrganization(result.organization)
+            
             DispatchQueue.main.async {
                 guard let user = self?.userDetails else { return }
                 self?.nameLabel.text = user.name
                 self?.emailLabel.text = user.email
-                self?.organizationURL = user.organization
                 self?.followingLabel.text = "\(user.following)"
                 self?.followersLabel.text = "\(user.followers)"
-                self?.createdLabel.text = user.createdAt
+                let dateformatter = DateFormatter()
+                dateformatter.dateFormat = "dd-MM-YYYY"
+                let creationDate = dateformatter.string(from: user.createdAt)
+                self?.createdLabel.text = creationDate
             }
         }
     }
     
-    private func fetchOrganization() {
-        
+    private func fetchOrganization(_ url: URL?) {
+        guard let url = url else { return }
+        Loader.fetchEntity(url: url, entity: [Organization].self) { [weak self] result in
+            if let result = result {
+                self?.fetchedOrganizations = result
+            }
+            DispatchQueue.main.async {
+                self?.organizationLabel.text = self?.fetchedOrganizations.map { $0.name }.joined(separator: ", ")
+            }
+        }
+    }
+    
+    private func fetchAvatar(_ url: URL?) {
+        guard let url = user?.avatar else { return }
+        avatarImageView.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "placeholder.png")) { [weak self] (_, _, _, _) in
+            self?.aspectConstraint = self?.avatarImageView.aspectConstraint
+        }
     }
 }

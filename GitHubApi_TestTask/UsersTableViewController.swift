@@ -17,6 +17,7 @@ class UsersTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "GitHub Users"
         tableView.register(UsersTableViewCell.self, forCellReuseIdentifier: UsersTableViewCell.reuseIdentifier)
         fetchUsers()
     }

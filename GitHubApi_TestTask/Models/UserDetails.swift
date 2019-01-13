@@ -16,7 +16,7 @@ struct UserDetails: Codable {
     let organization: URL?
     let following: Int
     let followers: Int
-    let createdAt: String
+    let createdAt: Date
     
     enum CodingKeys: String, CodingKey {
         case name = "login"

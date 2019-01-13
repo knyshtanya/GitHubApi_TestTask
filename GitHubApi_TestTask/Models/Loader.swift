@@ -15,6 +15,7 @@ struct Loader {
             guard let data = data else { return }
             do {
                 let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
                 let result = try decoder.decode(entity, from: data)
                 completion(result)
             }
