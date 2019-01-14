@@ -21,7 +21,6 @@ class UserDetailsViewController: UIViewController {
     
     public var user: User?
     private var userDetails: UserDetails?
-    private var organizationURL: URL?
     private var fetchedOrganizations = [Organization]()
     
     private var aspectConstraint : NSLayoutConstraint? {
@@ -34,20 +33,24 @@ class UserDetailsViewController: UIViewController {
             }
         }
     }
-
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchUserDetails()
         fetchAvatar(user?.avatar)
     }
     
+    // MARK: - Fetch users details
+    
     private func fetchUserDetails() {
         guard let user = user else { return }
         guard let url = URL(string: "https://api.github.com/users/\(user.name)") else { return }
         Loader.fetchEntity(url: url, entity: UserDetails.self) { [weak self] result in
             guard let result = result else { return }
-                self?.userDetails = result
-                self?.fetchOrganization(result.organization)
+            self?.userDetails = result
+            self?.fetchOrganizations(result.organization)
             
             DispatchQueue.main.async {
                 guard let user = self?.userDetails else { return }
@@ -63,7 +66,9 @@ class UserDetailsViewController: UIViewController {
         }
     }
     
-    private func fetchOrganization(_ url: URL?) {
+    // MARK: - Fetch user's organizations
+    
+    private func fetchOrganizations(_ url: URL?) {
         guard let url = url else { return }
         Loader.fetchEntity(url: url, entity: [Organization].self) { [weak self] result in
             if let result = result {
@@ -74,6 +79,8 @@ class UserDetailsViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Fetch user's avatar
     
     private func fetchAvatar(_ url: URL?) {
         guard let url = user?.avatar else { return }

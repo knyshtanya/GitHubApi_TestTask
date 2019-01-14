@@ -20,6 +20,13 @@ class UsersTableViewController: UITableViewController {
         navigationItem.title = "GitHub Users"
         tableView.register(UsersTableViewCell.self, forCellReuseIdentifier: UsersTableViewCell.reuseIdentifier)
         fetchUsers()
+        self.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func refresh() {
+       fetchUsers()
     }
     
     // MARK: - Fetch users
@@ -32,6 +39,7 @@ class UsersTableViewController: UITableViewController {
             }
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
+                self?.refreshControl?.endRefreshing()
             }
         }
     }
