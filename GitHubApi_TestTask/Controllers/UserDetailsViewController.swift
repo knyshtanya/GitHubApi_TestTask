@@ -20,8 +20,7 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var createdLabel: UILabel!
     
     public var user: User?
-    private var userDetails: UserDetails?
-    private var fetchedOrganizations = [Organization]()
+    private let userDetailsViewModel = UserDetailsViewModel()
     
     private var aspectConstraint : NSLayoutConstraint? {
         didSet {
@@ -44,25 +43,19 @@ class UserDetailsViewController: UIViewController {
         navigationItem.title = "\(user.name)"
     }
     
-    // MARK: - Fetch users details
+    // MARK: - Fetch user's details
     
     private func fetchUserDetails() {
-        guard let user = user else { return }
-        guard let url = URL(string: "https://api.github.com/users/\(user.name)") else { return }
-        Loader.fetchEntity(url: url, entity: UserDetails.self) { [weak self] result in
-            guard let result = result else { return }
-            self?.userDetails = result
-            self?.fetchOrganizations(result.organization)
-            
+        userDetailsViewModel.requestUserDetails(user: user) { [weak self] result in
+            let userDetails = result
+            self?.fetchOrganizations(userDetails.organization)
+
             DispatchQueue.main.async {
-                guard let user = self?.userDetails else { return }
-                self?.nameLabel.text = user.name
-                self?.emailLabel.text = user.email
-                self?.followingLabel.text = "\(user.following)"
-                self?.followersLabel.text = "\(user.followers)"
-                let dateformatter = DateFormatter()
-                dateformatter.dateFormat = "dd-MM-YYYY"
-                let creationDate = dateformatter.string(from: user.createdAt)
+                self?.nameLabel.text = userDetails.name
+                self?.emailLabel.text = userDetails.email
+                self?.followingLabel.text = "\(userDetails.following)"
+                self?.followersLabel.text = "\(userDetails.followers)"
+                let creationDate = UserDetailsViewModel.formatter.string(from: userDetails.createdAt)
                 self?.createdLabel.text = creationDate
             }
         }
@@ -72,22 +65,19 @@ class UserDetailsViewController: UIViewController {
     
     private func fetchOrganizations(_ url: URL?) {
         guard let url = url else { return }
-        Loader.fetchEntity(url: url, entity: [Organization].self) { [weak self] result in
-            if let result = result {
-                self?.fetchedOrganizations = result
-            }
+        userDetailsViewModel.requestOrganizations(url) { [weak self] result in
             DispatchQueue.main.async {
-                self?.organizationLabel.text = self?.fetchedOrganizations.map { $0.name }.joined(separator: ", ")
+                self?.organizationLabel.text = result.map { $0.name }.joined(separator: ", ")
             }
         }
     }
-    
+
     // MARK: - Fetch user's avatar
     
     private func fetchAvatar(_ url: URL?) {
         guard let url = user?.avatar else { return }
-        avatarImageView.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "placeholder.png")) { [weak self] (_, _, _, _) in
-            self?.aspectConstraint = self?.avatarImageView.aspectConstraint
+        userDetailsViewModel.requestAvatar(url, user: user, avatarImageView: avatarImageView) { [weak self] (constraint) in
+            self?.aspectConstraint = constraint
         }
     }
 }

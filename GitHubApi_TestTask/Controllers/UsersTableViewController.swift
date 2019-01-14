@@ -11,7 +11,7 @@ import Kingfisher
 
 class UsersTableViewController: UITableViewController {
     
-    private var dataModel = DataModel()
+    private var usersViewModel = UsersViewModel()
     
     // MARK: - Lifecycle
 
@@ -32,7 +32,7 @@ class UsersTableViewController: UITableViewController {
     // MARK: - Fetch users
     
     private func fetchUsers() {
-        dataModel.requestData {
+        usersViewModel.requestData {
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
                 self?.refreshControl?.endRefreshing()
@@ -43,20 +43,22 @@ class UsersTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataModel.numberOfRowsInSection()
+        return usersViewModel.usersCount
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UsersTableViewCell.reuseIdentifier, for: indexPath)
         guard let usersCell = cell as? UsersTableViewCell else { return UITableViewCell() }
-        usersCell.user = dataModel.users[indexPath.row]
+        usersCell.user = usersViewModel.users[indexPath.row]
         return usersCell
     }
+    
+    // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let userDetailsVC = storyboard.instantiateViewController(withIdentifier: "UserDetailsVC") as? UserDetailsViewController else { return }
-        userDetailsVC.user = dataModel.users[indexPath.row]
+        userDetailsVC.user = usersViewModel.users[indexPath.row]
         navigationController?.pushViewController(userDetailsVC, animated: true)
     }
 }

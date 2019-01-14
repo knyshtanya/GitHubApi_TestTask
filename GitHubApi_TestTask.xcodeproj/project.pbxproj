@@ -20,7 +20,8 @@
 		D406D8A421EBC0AA0061290D /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8A321EBC0AA0061290D /* UserDetails.swift */; };
 		D406D8AB21EBC7AE0061290D /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8AA21EBC7AE0061290D /* UserDetailsViewController.swift */; };
 		D406D8AD21EBD61B0061290D /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8AC21EBD61B0061290D /* Organization.swift */; };
-		D406D8B021ECC6220061290D /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8AF21ECC6220061290D /* DataModel.swift */; };
+		D406D8B021ECC6220061290D /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8AF21ECC6220061290D /* UsersViewModel.swift */; };
+		D406D8B221ECD50E0061290D /* UserDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8B121ECD50E0061290D /* UserDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +42,8 @@
 		D406D8A321EBC0AA0061290D /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		D406D8AA21EBC7AE0061290D /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		D406D8AC21EBD61B0061290D /* Organization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
-		D406D8AF21ECC6220061290D /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		D406D8AF21ECC6220061290D /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
+		D406D8B121ECD50E0061290D /* UserDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +115,8 @@
 				D406D89B21EA665C0061290D /* Loader.swift */,
 				D406D8A321EBC0AA0061290D /* UserDetails.swift */,
 				D406D8AC21EBD61B0061290D /* Organization.swift */,
-				D406D8AF21ECC6220061290D /* DataModel.swift */,
+				D406D8AF21ECC6220061290D /* UsersViewModel.swift */,
+				D406D8B121ECD50E0061290D /* UserDetailsViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -261,9 +264,10 @@
 				D406D89E21EA6C1E0061290D /* User.swift in Sources */,
 				D406D88421EA35460061290D /* AppDelegate.swift in Sources */,
 				D406D8A121EBBF7E0061290D /* UIImageView+aspectConstraint.swift in Sources */,
-				D406D8B021ECC6220061290D /* DataModel.swift in Sources */,
+				D406D8B021ECC6220061290D /* UsersViewModel.swift in Sources */,
 				D406D89621EA463D0061290D /* UsersTableViewController.swift in Sources */,
 				D406D89C21EA665C0061290D /* Loader.swift in Sources */,
+				D406D8B221ECD50E0061290D /* UserDetailsViewModel.swift in Sources */,
 				D406D8AD21EBD61B0061290D /* Organization.swift in Sources */,
 				D406D8AB21EBC7AE0061290D /* UserDetailsViewController.swift in Sources */,
 			);

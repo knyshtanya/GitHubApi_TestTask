@@ -8,9 +8,12 @@
 
 import Foundation
 
-class DataModel {
+class UsersViewModel {
     
     var users = [User]()
+    var usersCount: Int {
+        return users.count
+    }
 
     func requestData(completion: @escaping () -> Void) {
         guard let url = URL(string: "https://api.github.com/users") else { return }
@@ -20,9 +23,5 @@ class DataModel {
                 completion()
             }
         }
-    }
-    
-    func numberOfRowsInSection() -> Int {
-        return users.count
     }
 }
