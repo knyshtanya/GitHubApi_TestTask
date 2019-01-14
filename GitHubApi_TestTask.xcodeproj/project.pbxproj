@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A9858F2A24DC59D5FAC6D5BB /* Pods_GitHubApi_TestTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08C60E779C0A7DEF79FDA6F /* Pods_GitHubApi_TestTask.framework */; };
 		D406D88421EA35460061290D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D88321EA35460061290D /* AppDelegate.swift */; };
-		D406D88621EA35460061290D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D88521EA35460061290D /* ViewController.swift */; };
 		D406D88921EA35460061290D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D406D88721EA35460061290D /* Main.storyboard */; };
 		D406D88B21EA35480061290D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D406D88A21EA35480061290D /* Assets.xcassets */; };
 		D406D88E21EA35480061290D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D406D88C21EA35480061290D /* LaunchScreen.storyboard */; };
@@ -21,6 +20,7 @@
 		D406D8A421EBC0AA0061290D /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8A321EBC0AA0061290D /* UserDetails.swift */; };
 		D406D8AB21EBC7AE0061290D /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8AA21EBC7AE0061290D /* UserDetailsViewController.swift */; };
 		D406D8AD21EBD61B0061290D /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8AC21EBD61B0061290D /* Organization.swift */; };
+		D406D8B021ECC6220061290D /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406D8AF21ECC6220061290D /* DataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,6 @@
 		A5F400CEE3AA8B054ACDAA6A /* Pods-GitHubApi_TestTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubApi_TestTask.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubApi_TestTask/Pods-GitHubApi_TestTask.release.xcconfig"; sourceTree = "<group>"; };
 		D406D88021EA35460061290D /* GitHubApi_TestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubApi_TestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D406D88321EA35460061290D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D406D88521EA35460061290D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D406D88821EA35460061290D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D406D88A21EA35480061290D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D406D88D21EA35480061290D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -42,6 +41,7 @@
 		D406D8A321EBC0AA0061290D /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		D406D8AA21EBC7AE0061290D /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		D406D8AC21EBD61B0061290D /* Organization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
+		D406D8AF21ECC6220061290D /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,13 +85,11 @@
 		D406D88221EA35460061290D /* GitHubApi_TestTask */ = {
 			isa = PBXGroup;
 			children = (
+				D406D88321EA35460061290D /* AppDelegate.swift */,
+				D406D8AE21ECBD680061290D /* Controllers */,
 				D406D8A521EBC2060061290D /* Cells */,
 				D406D8A221EBC08F0061290D /* Models */,
 				D406D89F21EBBF420061290D /* Extensions */,
-				D406D88321EA35460061290D /* AppDelegate.swift */,
-				D406D88521EA35460061290D /* ViewController.swift */,
-				D406D89521EA463D0061290D /* UsersTableViewController.swift */,
-				D406D8AA21EBC7AE0061290D /* UserDetailsViewController.swift */,
 				D406D88721EA35460061290D /* Main.storyboard */,
 				D406D88A21EA35480061290D /* Assets.xcassets */,
 				D406D88C21EA35480061290D /* LaunchScreen.storyboard */,
@@ -115,6 +113,7 @@
 				D406D89B21EA665C0061290D /* Loader.swift */,
 				D406D8A321EBC0AA0061290D /* UserDetails.swift */,
 				D406D8AC21EBD61B0061290D /* Organization.swift */,
+				D406D8AF21ECC6220061290D /* DataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -125,6 +124,15 @@
 				D406D89721EA47E30061290D /* UsersTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		D406D8AE21ECBD680061290D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D406D89521EA463D0061290D /* UsersTableViewController.swift */,
+				D406D8AA21EBC7AE0061290D /* UserDetailsViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		FA1792DF8713C0DF56A7B0F1 /* Pods */ = {
@@ -250,10 +258,10 @@
 			files = (
 				D406D89821EA47E30061290D /* UsersTableViewCell.swift in Sources */,
 				D406D8A421EBC0AA0061290D /* UserDetails.swift in Sources */,
-				D406D88621EA35460061290D /* ViewController.swift in Sources */,
 				D406D89E21EA6C1E0061290D /* User.swift in Sources */,
 				D406D88421EA35460061290D /* AppDelegate.swift in Sources */,
 				D406D8A121EBBF7E0061290D /* UIImageView+aspectConstraint.swift in Sources */,
+				D406D8B021ECC6220061290D /* DataModel.swift in Sources */,
 				D406D89621EA463D0061290D /* UsersTableViewController.swift in Sources */,
 				D406D89C21EA665C0061290D /* Loader.swift in Sources */,
 				D406D8AD21EBD61B0061290D /* Organization.swift in Sources */,

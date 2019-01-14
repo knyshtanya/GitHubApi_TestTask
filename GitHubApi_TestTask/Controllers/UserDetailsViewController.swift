@@ -40,6 +40,8 @@ class UserDetailsViewController: UIViewController {
         super.viewDidLoad()
         fetchUserDetails()
         fetchAvatar(user?.avatar)
+        guard let user = user else { return }
+        navigationItem.title = "\(user.name)"
     }
     
     // MARK: - Fetch users details

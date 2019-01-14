@@ -11,7 +11,7 @@ import Kingfisher
 
 class UsersTableViewController: UITableViewController {
     
-    private var users = [User]()
+    private var dataModel = DataModel()
     
     // MARK: - Lifecycle
 
@@ -32,12 +32,8 @@ class UsersTableViewController: UITableViewController {
     // MARK: - Fetch users
     
     private func fetchUsers() {
-        guard let url = URL(string: "https://api.github.com/users") else { return }
-        Loader.fetchEntity(url: url, entity: [User].self) { [weak self] result in
-            if let result = result {
-                self?.users = result
-            }
-            DispatchQueue.main.async {
+        dataModel.requestData {
+            DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
                 self?.refreshControl?.endRefreshing()
             }
@@ -47,20 +43,20 @@ class UsersTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        return dataModel.numberOfRowsInSection()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UsersTableViewCell.reuseIdentifier, for: indexPath)
         guard let usersCell = cell as? UsersTableViewCell else { return UITableViewCell() }
-        usersCell.user = users[indexPath.row]
+        usersCell.user = dataModel.users[indexPath.row]
         return usersCell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let userDetailsVC = storyboard.instantiateViewController(withIdentifier: "UserDetailsVC") as? UserDetailsViewController else { return }
-        userDetailsVC.user = users[indexPath.row]
+        userDetailsVC.user = dataModel.users[indexPath.row]
         navigationController?.pushViewController(userDetailsVC, animated: true)
     }
 }
