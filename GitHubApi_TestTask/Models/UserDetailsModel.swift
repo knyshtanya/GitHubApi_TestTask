@@ -2,6 +2,8 @@ import UIKit
 
 class UserDetailsModel {
     
+    // MARK: - Request user's details
+    
     func requestUserDetails(user: User?, completion: @escaping (UserDetails?) -> Void) {
         guard let user = user else {
             completion(nil)
@@ -12,6 +14,8 @@ class UserDetailsModel {
             completion(result)
         }
     }
+    
+    // MARK: - Request organizations
     
     func requestOrganizations(_ url: URL?, completion: @escaping ([Organization]?) -> Void) {
         guard let url = url else {

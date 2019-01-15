@@ -12,18 +12,24 @@ class UsersModel {
         return users[index]
     }
     
+    // MARK: - Request users
+    
     func requestUsers(completion: @escaping () -> Void) {
         guard let url = URL(string: "https://api.github.com/users") else {
             completion()
             return
         }
         Loader.fetchEntity(url: url, entity: [User].self) { [weak self] result in
-            if let result = result {
-                self?.users = result
+            guard let result = result else {
                 completion()
+                return
             }
+            self?.users = result
+            completion()
         }
     }
+    
+    // MARK: - Request next page users
     
     func requestNextUsers(completion: @escaping () -> Void) {
         guard let id = users.last?.id, let url = URL(string: "https://api.github.com/users?since=\(id)") else {
@@ -31,10 +37,12 @@ class UsersModel {
             return
         }
         Loader.fetchEntity(url: url, entity: [User].self) { [weak self] result in
-            if let result = result {
-                self?.users.append(contentsOf: result)
+            guard let result = result else {
                 completion()
+                return
             }
+            self?.users.append(contentsOf: result)
+            completion()
         }
     }
 }

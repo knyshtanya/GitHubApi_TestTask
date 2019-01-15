@@ -7,6 +7,7 @@ class UsersTableViewCell: UITableViewCell {
     var avatar = UIImageView()
     var name = UILabel()
     var id = UILabel()
+    
     var user: User? {
         didSet {
             guard let user = user else { return }
@@ -48,8 +49,10 @@ class UsersTableViewCell: UITableViewCell {
     }
     
     private func setConstraints() {
+    
         [avatar, name, id].forEach { contentView.addSubview($0) }
         [avatar, name, id].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        
         NSLayoutConstraint.activate([
             avatar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             avatar.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
