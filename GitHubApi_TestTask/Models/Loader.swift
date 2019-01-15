@@ -1,18 +1,13 @@
-//
-//  Loader.swift
-//  GitHubApi_TestTask
-//
-//  Created by Tatiana Knysh on 12.01.2019.
-//  Copyright © 2019 Tatiana Knysh. All rights reserved.
-//
-
 import Foundation
 
 struct Loader {
     
     static func fetchEntity<T: Codable>(url: URL, entity: T.Type, completion: @escaping (T?) -> Void) {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else { return }
+            guard let data = data else {
+                completion(nil)
+                return
+            }
             do {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
@@ -23,6 +18,6 @@ struct Loader {
                 print(error.localizedDescription)
                 completion(nil)
             }
-        }.resume()
+            }.resume()
     }
 }

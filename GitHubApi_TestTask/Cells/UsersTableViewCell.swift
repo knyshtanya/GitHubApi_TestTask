@@ -1,13 +1,4 @@
-//
-//  UsersTableViewCell.swift
-//  GitHubApi_TestTask
-//
-//  Created by Tatiana Knysh on 12.01.2019.
-//  Copyright © 2019 Tatiana Knysh. All rights reserved.
-//
-
 import UIKit
-import Kingfisher
 
 class UsersTableViewCell: UITableViewCell {
     
@@ -38,7 +29,11 @@ class UsersTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+    
+    override func prepareForReuse() {
+        avatar.kf.cancelDownloadTask()
+    }
+    
     // MARK: - Constraints
     
     private var aspectConstraint : NSLayoutConstraint? {

@@ -1,15 +1,13 @@
-//
-//  UserDetailsViewController.swift
-//  GitHubApi_TestTask
-//
-//  Created by Tatiana Knysh on 13.01.2019.
-//  Copyright © 2019 Tatiana Knysh. All rights reserved.
-//
-
 import UIKit
 import Kingfisher
 
 class UserDetailsViewController: UIViewController {
+    
+    static let formatter: DateFormatter = {
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "dd-MM-YYYY"
+        return dateformatter
+    }()
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -20,7 +18,7 @@ class UserDetailsViewController: UIViewController {
     @IBOutlet weak var createdLabel: UILabel!
     
     public var user: User?
-    private let userDetailsViewModel = UserDetailsViewModel()
+    private let userDetailsModel = UserDetailsModel()
     
     private var aspectConstraint : NSLayoutConstraint? {
         didSet {
@@ -46,16 +44,16 @@ class UserDetailsViewController: UIViewController {
     // MARK: - Fetch user's details
     
     private func fetchUserDetails() {
-        userDetailsViewModel.requestUserDetails(user: user) { [weak self] result in
-            let userDetails = result
+        userDetailsModel.requestUserDetails(user: user) { [weak self] result in
+            guard let userDetails = result else { return }
             self?.fetchOrganizations(userDetails.organization)
-
+            
             DispatchQueue.main.async {
                 self?.nameLabel.text = userDetails.name
                 self?.emailLabel.text = userDetails.email
                 self?.followingLabel.text = "\(userDetails.following)"
                 self?.followersLabel.text = "\(userDetails.followers)"
-                let creationDate = UserDetailsViewModel.formatter.string(from: userDetails.createdAt)
+                let creationDate = UserDetailsViewController.formatter.string(from: userDetails.createdAt)
                 self?.createdLabel.text = creationDate
             }
         }
@@ -65,19 +63,19 @@ class UserDetailsViewController: UIViewController {
     
     private func fetchOrganizations(_ url: URL?) {
         guard let url = url else { return }
-        userDetailsViewModel.requestOrganizations(url) { [weak self] result in
+        userDetailsModel.requestOrganizations(url) { [weak self] result in
             DispatchQueue.main.async {
-                self?.organizationLabel.text = result.map { $0.name }.joined(separator: ", ")
+                self?.organizationLabel.text = result?.map { $0.name }.joined(separator: ", ")
             }
         }
     }
-
+    
     // MARK: - Fetch user's avatar
     
     private func fetchAvatar(_ url: URL?) {
         guard let url = user?.avatar else { return }
-        userDetailsViewModel.requestAvatar(url, user: user, avatarImageView: avatarImageView) { [weak self] (constraint) in
-            self?.aspectConstraint = constraint
+        avatarImageView.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "placeholder.png")) {[weak self] (_, _, _, _) in
+            self?.aspectConstraint = self?.avatarImageView.aspectConstraint
         }
     }
 }
